@@ -40,4 +40,17 @@ public class StudentController {
         List<StudentDTO> allStudents = studentService.getAllStudents();
         return allStudents;
     }
+
+    @PutMapping(path = "/update")
+    public String updateStudent(@RequestBody StudentUpdateDTO studentUpdateDTO)
+    {
+        String stname = studentService.updateStudent(studentUpdateDTO);
+        return stname;
+    }
+    @DeleteMapping(path = "/delete/{id}")
+    public String deleteStudent(@PathVariable(value = "id")int id)
+    {
+        boolean deleteStudent = studentService.deleteStudent(id);
+        return "deletedddddd!!!!";
+    }
 }

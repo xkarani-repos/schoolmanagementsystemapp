@@ -2,6 +2,7 @@ package com.bms.schoolmanagementsystemapp.service.IMPL;
 
 
 import com.bms.schoolmanagementsystemapp.dto.StudentSaveDTO;
+import com.bms.schoolmanagementsystemapp.dto.StudentUpdateDTO;
 import com.bms.schoolmanagementsystemapp.dto.StudentDTO;
 import com.bms.schoolmanagementsystemapp.entity.Student;
 import com.bms.schoolmanagementsystemapp.repo.StudentRepo;
@@ -48,5 +49,35 @@ public class StudentServiceIMPL implements StudentService {
             studentDTOList.add(studentDTO);
         }
         return studentDTOList;
+    }
+
+    @Override
+    public String updateStudent(StudentUpdateDTO studentUpdateDTO) {
+        if(studentRepo.existsById(studentUpdateDTO.getStudentid()))
+        {
+            Student student = studentRepo.getById(studentUpdateDTO.getStudentid());
+            student.setStudentname(studentUpdateDTO.getStudentname());
+            student.setAddress(studentUpdateDTO.getAddress());
+            student.setPhone(studentUpdateDTO.getPhone());
+            studentRepo.save(student);
+            return student.getStudentname();
+        }
+        else
+        {
+            System.out.println("Student ID Not Found");
+        }
+        return null;
+    }
+    @Override
+    public boolean deleteStudent(int id) {
+        if(studentRepo.existsById(id))
+        {
+            studentRepo.deleteById(id);
+        }
+        else
+        {
+            System.out.println("Student ID Not Found");
+        }
+        return false;
     }
 }
